@@ -3,9 +3,9 @@ var stage1State = {
     create: function() {
         this.onGame = true;
 
-        game.add.sprite(0, 0, 'bg');
+        game.add.sprite(0, 0, 'bg');//inicia a imagem de fundo
 
-        var lab = parseInt(Math.random() * 4);
+        var lab = parseInt(Math.random() * 4);//gera um número randomico para pegar um labirinto aleatório
         console.log(lab);
         if (lab == 0) {
             this.maze = [
@@ -75,11 +75,11 @@ var stage1State = {
                 var y = row * 50;
 
                 if (tile === 1) {
-                    var block = this.blocks.create(x, y, 'block');
+                    var block = this.blocks.create(x, y, 'block');//cria o bloco/arvore
                     block.body.immovable = true;
                 } else
                 if (tile === 2) {
-                    this.player = game.add.sprite(x + 25, y + 25, 'player');
+                    this.player = game.add.sprite(x + 25, y + 25, 'player');//cria o jogador
                     this.player.anchor.set(.5);
                     game.physics.arcade.enable(this.player);
                     this.player.animations.add('goDown', [0, 1, 2, 3], 12, true);
@@ -87,7 +87,7 @@ var stage1State = {
                     this.player.animations.add('goLeft', [8, 9, 10, 11], 12, true);
                     this.player.animations.add('goRight', [12, 13, 14, 15], 12, true);
                 } else
-                if (tile === 3) {
+                if (tile === 3) {//posição do ponto de chegada
                     var position = {
                         x: x + 25,
                         y: y + 25
@@ -97,7 +97,7 @@ var stage1State = {
             }
         }
 
-
+        
         this.coin = {};
         this.coin.position = this.newPosition();
         this.coin = game.add.sprite(this.coin.position.x, this.coin.position.y, 'coin');
@@ -120,10 +120,10 @@ var stage1State = {
     update: function() {
         if (this.onGame) {
             game.physics.arcade.collide(this.player, this.blocks);
-            game.physics.arcade.overlap(this.player, this.coin, this.getCoin, null, this);
+            game.physics.arcade.overlap(this.player, this.coin, this.venceu, null, this);
             this.movePlayer();
 
-            if (this.time < 1 || this.coins >= 10) {
+            if (this.time < 1) {
                 this.gameOver();
             }
         }
@@ -144,14 +144,14 @@ var stage1State = {
     },
 
 
-    getCoin: function() {
+    venceu: function() {
 
         var t = 30 - this.time;
-        swal("Você venceu!", "O seu tempo foi de " + t + " segundos", "success");
+        swal("Você venceu!", "O seu tempo foi de " + t + " segundos");
 
         game.state.start('stage1');
     },
-
+//tempo
     getText: function(value) {
         if (value < 10) {
             return '00' + value.toString();
@@ -162,7 +162,7 @@ var stage1State = {
         return value.toString();
     },
 
-    movePlayer: function() {
+    movePlayer: function() {//mover o jogador
         this.player.body.velocity.x = 0;
         this.player.body.velocity.y = 0;
 
@@ -184,7 +184,7 @@ var stage1State = {
             this.player.direction = "down";
         }
 
-        switch (this.player.direction) {
+        switch (this.player.direction) {//move a sprite
             case "left":
                 this.player.animations.play('goLeft');
                 break;
@@ -204,7 +204,7 @@ var stage1State = {
         }
     },
 
-    newPosition: function() {
+    newPosition: function() {//nova posição para a chegada
         var pos = this.coinPositions[Math.floor(Math.random() * this.coinPositions.length)];
 
         while (this.coin.position === pos) {
