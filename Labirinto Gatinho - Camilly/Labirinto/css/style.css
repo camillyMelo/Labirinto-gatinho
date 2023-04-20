@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    background-color: #1a0a06;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+@media (max-width: 768px) {
+    .container {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 320px) {
+    .container {
+        padding: 0 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 0 5px;
+    }
+}
+
+@media (max-width: 1200px) {
+    .container {
+        padding: 10 50px;
+    }
+}
+
+@font-face {
+    font-family: emulogic;
+    src: url('emulogic.ttf');
+}
+
+.hidden {
+    font-family: emulogic;
+    visibility: hidden;
+    position: absolute;
+}
